@@ -1,3 +1,10 @@
+Ideia geral
+-> Para achar um BEAN
+	Faz um 'component scan' no pacote para encontrar todos os beans (@Component)
+-> Pra casar AUTOWIRED
+	Se só tem um @Component do tipo do construtor, ele serve como dependencia escolhida
+	Se tem mais de um, @Primary escolhe qual deve ser escolhido primeiro como dependencia injetada
+
 @Component
 Define uma BEAN!
 Spring sabe que tem que gerenciar estas classes com sua injeção de dependência
@@ -5,12 +12,16 @@ Ele gerencia as instancias das classes
 
 @Autowired
 Define uma DEPENDENCIA da BEAN!
-Diz para o Spring qual é a dependencia que ele tem que gerenciar 
+Diz para o Spring qual é a dependencia que ele tem que gerenciar
 quando a classe é @Component
+Pode ser via CONSTRUTOR, SETTER, OU NENHUM!! 'o nenhum serve como SETTER'
 
 @SpringBootApplication
 Diz ao Spring Boot para escanear o pacote e subpacotes em que esta classe está definida
 Escanear é encontrar beans e dependencias
+
+@Primary
+Diz ordem para escolha numa injeção de dependência @Autowired
 
 Beans
 É um objeto de uma classe
@@ -28,9 +39,9 @@ Application Context
 É o IOC container do Spring
 Gerencia todos os BEANS e suas DEPENDENCIAS
 
-ApplicationContext applicationContext = 
+ApplicationContext applicationContext =
 	SpringApplication.run(SpringIn5StepsApplication.class, args);
-BinarySearchImpl binarySearch =  
+BinarySearchImpl binarySearch =
 	applicationContext.getBean(BinarySearchImpl.class)
 
 Loosely coupled
