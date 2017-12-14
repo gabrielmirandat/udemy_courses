@@ -5,6 +5,13 @@ Ideia geral
 	Se só tem um @Component do tipo do construtor, ele serve como dependencia escolhida
 	Se tem mais de um, @Primary escolhe qual deve ser escolhido primeiro como dependencia injetada
 
+Projetos
+- Spring Boot: microserviços
+- Spring Cloud: tornar o serviço cloudable
+- Spring Data: facilita integração com banco de dados
+- Spring Integration: facilita integração de acordo com padrões
+
+
 @Component
 Define uma BEAN!
 Spring sabe que tem que gerenciar estas classes com sua injeção de dependência
