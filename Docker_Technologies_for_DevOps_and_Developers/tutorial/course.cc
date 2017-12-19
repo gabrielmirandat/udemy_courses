@@ -75,9 +75,31 @@ $ docker logs <container_id>
 $ docker history <imagem>:<tag>
 	'mostra as camadas da imagem'
 
+$ docker commit <container_id> <repositorio_dockerhub>:<tag>
+	'salva mudanças feitas num container como uma nova imagem no dockerhub'
+
+$ docker build <path>
+	'constroi uma imagem de um Dockerfile'
+
+	FLAGS
+	-t <repositorio_dockerhub>:<tag>
+		'indica repositório para a imagem sendo construída'
+
 # Outros comandos
 $ exit 
 	'sai do container e mata ele'
+
+# Dockerfile
+	FROM - imagem base
+	RUN - comandos de instalação da imagem
+	CMD - comandos a serem executados quando um container é iniciado
+
+	- cada instrução cria uma camada de imagem na imagem gerada
+	- sempre que instalar algo coloca -y para aceitar os prompts automaticamente
+	- encadear RUN para reduzir número de layers criadas
+	- instalar pacotes em ordem alfanumerica
+	- 
+	
 
 
 
