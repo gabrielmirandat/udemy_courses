@@ -39,6 +39,7 @@ $ docker info
 $ docker images 
 	'mostra as imagens locais'
 $ docker run <imagem>:<tag> <comando> <argumento>
+// $ docker run --rm -it 89066d1f15e8 sh
 	'roda um container, se a imagem não existir tenta baixar do dockerhub'
 	
 	COMANDO/ARGUMENTO 
@@ -75,15 +76,33 @@ $ docker logs <container_id>
 $ docker history <imagem>:<tag>
 	'mostra as camadas da imagem'
 
-$ docker commit <container_id> <repositorio_dockerhub>:<tag>
-	'salva mudanças feitas num container como uma nova imagem no dockerhub'
+$ docker commit <container_id> <dockerhub_id/repositorio>:<tag>
+	'salva mudanças feitas num container como um novo repositório'
 
 $ docker build <path>
+// $ docker build -t gabrielmirandat/node_course_udemy --network network_name .
 	'constroi uma imagem de um Dockerfile'
 
 	FLAGS
-	-t <repositorio_dockerhub>:<tag>
+	-t <dockerhub_id/repositorio>:<tag>
 		'indica repositório para a imagem sendo construída'
+	--no-cache=true
+		'remove cacheamento que causa erro quando os RUN não estão encadeados'
+
+$ docker tag <image_id> <new_repository_name>:<tag>
+// $ docker tag 89066d1f15e8 gabrielmirandat/node_course_udemy:1.01
+	'usado para renomear nome do repositorio util para mandar para o dockerhub'
+	'para o dockerhub, precisa ser <dockerhub_id/repositorio>:<tag>'
+	'nunca use latest!'
+$ docker login
+	'faz login no dockerhub'
+
+	FLAGS
+	--username=<usuario>
+		'indica nome de usuario dockerhub'
+
+$ docker push <dockerhub_id/repositorio>:<tag>
+	'faz push para dockerhub'
 
 # Outros comandos
 $ exit 
@@ -93,12 +112,15 @@ $ exit
 	FROM - imagem base
 	RUN - comandos de instalação da imagem
 	CMD - comandos a serem executados quando um container é iniciado
+	COPY - copia arquivos ou diretórios do contexto build para o sistema de arquivos do container
+	ADD - como um copy, mas pode baixar da internet e descomprimir arquivos automaticamente, copy é preferível
+	USER - indica o usuario que sera usado nos containers
+	WORDIR - seta o diretório de trabalho inicial
 
 	- cada instrução cria uma camada de imagem na imagem gerada
 	- sempre que instalar algo coloca -y para aceitar os prompts automaticamente
 	- encadear RUN para reduzir número de layers criadas
 	- instalar pacotes em ordem alfanumerica
-	- 
 	
 
 
