@@ -36,10 +36,13 @@ Repository
 # Comandos
 $ docker info 
 	'informações do sistema'
+
 $ docker images 
 	'mostra as imagens locais'
+
 $ docker run <imagem>:<tag> <comando> <argumento>
 // $ docker run --rm -it 89066d1f15e8 sh
+// $ docker run -d -p 5000:5000 --network network_name 5ee7219a63eb
 	'roda um container, se a imagem não existir tenta baixar do dockerhub'
 	
 	COMANDO/ARGUMENTO 
@@ -47,6 +50,8 @@ $ docker run <imagem>:<tag> <comando> <argumento>
 		'printa na tela'
 	ls /
 		'mostra pasta root'
+	bash
+		'terminal'
 	
 	FLAGS
 	-it 
@@ -81,6 +86,7 @@ $ docker commit <container_id> <dockerhub_id/repositorio>:<tag>
 
 $ docker build <path>
 // $ docker build -t gabrielmirandat/node_course_udemy --network network_name .
+// $ docker build -t dockerapp:v0.2 --network network_name .
 	'constroi uma imagem de um Dockerfile'
 
 	FLAGS
@@ -103,6 +109,20 @@ $ docker login
 
 $ docker push <dockerhub_id/repositorio>:<tag>
 	'faz push para dockerhub'
+
+$ docker exec <container_id> <comando> <argumento>
+// $ docker exec -it 01c4884ffbe0 bash
+	'para rodar um comando num container ativo'
+
+	FLAGS
+	-it 
+		'para rodar no modo iterativo'
+
+	COMANDO/ARGUMENTO
+		'vide docker run'
+
+$ docker stop <container_name>
+	'para container'
 
 # Outros comandos
 $ exit 
