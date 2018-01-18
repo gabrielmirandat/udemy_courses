@@ -43,6 +43,7 @@ $ docker images
 $ docker run <imagem>:<tag> <comando> <argumento>
 // $ docker run --rm -it 89066d1f15e8 sh
 // $ docker run -d -p 5000:5000 --network network_name 5ee7219a63eb
+// $ docker run -d -p 5000:5000 --network network_name --link redis dockerapp:v0.3
 	'roda um container, se a imagem não existir tenta baixar do dockerhub'
 	
 	COMANDO/ARGUMENTO 
@@ -64,6 +65,8 @@ $ docker run <imagem>:<tag> <comando> <argumento>
 		'mata o container sempre que sair dele'
 	--name hello_world
 		'especifica um nome para o container sendo rodado'
+	-- link <nome>
+		'cria um link entre o container sendo rodado e outro que se chama nome'
 
 $ docker ps 
 	'mostra os containers ativos'
