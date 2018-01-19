@@ -76,6 +76,7 @@ $ docker ps
 		'mostra ativos e inativos'
 
 $ docker inspect <container_id>
+// $ docker inspect bb076b5a624b | grep IP
 	'da informacoes sobre o container'
 
 $ docker logs <container_id>
