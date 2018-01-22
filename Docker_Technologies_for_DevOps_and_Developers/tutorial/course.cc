@@ -128,6 +128,9 @@ $ docker exec <container_id> <comando> <argumento>
 $ docker stop <container_name>
 	'para container'
 
+$ docker network ls
+	'observa redes disponíveis'
+
 # Outros comandos
 $ exit 
 	'sai do container e mata ele'
@@ -145,10 +148,38 @@ $ exit
 	- sempre que instalar algo coloca -y para aceitar os prompts automaticamente
 	- encadear RUN para reduzir número de layers criadas
 	- instalar pacotes em ordem alfanumerica
-	
+
+# Docker-compose
+	- Facilita a gerência de containers com script
+
+$ docker-compose version
+	'ver versão'
+
+$ docker-compose up
+	'build nos containers do docker-container'
+
+	FLAGS
+	-d 
+		'rodar em background'
+
+$ docker-compose ps
+	'olha status dos containers rodados com compose'
 
 
+$ docker-compose logs <comando>
+	'olha logs'
 
+	COMANDO/ARGUMENTO 
+	nome_container
+		'mostra o log de um container específico'
 
+$ docker-compose stop
+	'para todos os containers sem removê-los'
+
+$ docker-compose rm
+	'remove todos os containers do compose'		
+
+$ docker-compose build
+'força que o compose de build na imagem'	
 
 
