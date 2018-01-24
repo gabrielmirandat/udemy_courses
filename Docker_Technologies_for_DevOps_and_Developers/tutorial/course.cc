@@ -18,7 +18,16 @@ Docker daemon
 	- roda no sistema (se linux) ou numa VM (windows, osx)
 Registry
 	- armazena
-
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
 # Principal
 Images
 	- templates para criar containers
@@ -33,6 +42,38 @@ Registry
 Repository
 	- armazena várias versões da imagem com tags
 
+Networks
+	- tipos de rede
+		- Closed / None (fechada)
+			- isolada do mundo externo
+			- não consegue pingar nada
+			- máxima proteção contra mundo externo
+
+		- Bridge
+			- default
+			- obtem uma quantidade de ips de rede 
+			- containers de uma mesma bridge conseguem se comunicar entre si
+			- containers de bridges diferentes não se comunicam por default
+
+		- Host
+			- o container tem a mesma rede do pc
+			- menor proteção contra mundo externo
+			- acesso total a interface do computador
+
+		- Overlay
+			- permite deploy container em várias máquinas
+			- necessita rodar docker engine em modo 'swarm'
+			- geralmente usado em produção
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
 # Comandos
 $ docker info 
 	'informações do sistema'
@@ -44,6 +85,8 @@ $ docker run <imagem>:<tag> <comando> <argumento>
 // $ docker run --rm -it 89066d1f15e8 sh
 // $ docker run -d -p 5000:5000 --network network_name 5ee7219a63eb
 // $ docker run -d -p 5000:5000 --network network_name --link redis dockerapp:v0.3
+// $ docker run -d --name container_3 --net my_bridge_network busybox sleep 1000
+// $ docker run -d --name container_4 --net host busybox sleep 1000
 	'roda um container, se a imagem não existir tenta baixar do dockerhub'
 	
 	COMANDO/ARGUMENTO 
@@ -65,8 +108,10 @@ $ docker run <imagem>:<tag> <comando> <argumento>
 		'mata o container sempre que sair dele'
 	--name hello_world
 		'especifica um nome para o container sendo rodado'
-	-- link <nome>
+	--link <nome>
 		'cria um link entre o container sendo rodado e outro que se chama nome'
+	--net <nome_rede>
+		'define rede usada no container'
 
 $ docker ps 
 	'mostra os containers ativos'
@@ -116,6 +161,7 @@ $ docker push <dockerhub_id/repositorio>:<tag>
 
 $ docker exec <container_id> <comando> <argumento>
 // $ docker exec -it 01c4884ffbe0 bash
+// $ docker exec -it container_1 ifconfig
 	'para rodar um comando num container ativo'
 
 	FLAGS
@@ -129,12 +175,36 @@ $ docker stop <container_name>
 	'para container'
 
 $ docker network ls
-	'observa redes disponíveis'
+	'mostra os tipos de redes existentes na máquina'
+
+$ docker network inspect <rede>
+	'inspeciona rede'
+
+$ docker network create --driver <tipo_rede> <nome_rede>
+// $ docker network create --driver bridge my_bridge_network
+	'cria uma nova rede'
+
+$ docker network connect <nome_rede> <nome_container>
+// $ docker network connect bridge container_3
+	'adiciona conexão de uma rede ao container'
+
+$ docker network disconnect <nome_rede> <nome_container>
+// $ docker network disconnect bridge container_3
+	'remove conexão de uma rede ao container'
 
 # Outros comandos
 $ exit 
 	'sai do container e mata ele'
-
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
 # Dockerfile
 	FROM - imagem base
 	RUN - comandos de instalação da imagem
@@ -180,6 +250,4 @@ $ docker-compose rm
 	'remove todos os containers do compose'		
 
 $ docker-compose build
-'força que o compose de build na imagem'	
-
-
+'força que o compose de build na imagem'
