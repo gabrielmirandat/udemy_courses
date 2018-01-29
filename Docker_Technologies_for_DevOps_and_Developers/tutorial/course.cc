@@ -12,8 +12,8 @@ Um PC pode ter vários containers
 # Arquitetura
 Docker client
 	- aceita comandos do usuário
-Docker daemon 
-	- realiza os comandos 
+Docker daemon
+	- realiza os comandos
 	- precisa rodar em linux
 	- roda no sistema (se linux) ou numa VM (windows, osx)
 Registry
@@ -51,7 +51,7 @@ Networks
 
 		- Bridge
 			- default
-			- obtem uma quantidade de ips de rede 
+			- obtem uma quantidade de ips de rede
 			- containers de uma mesma bridge conseguem se comunicar entre si
 			- containers de bridges diferentes não se comunicam por default
 
@@ -75,10 +75,10 @@ Networks
 |
 |
 # Comandos
-$ docker info 
+$ docker info
 	'informações do sistema'
 
-$ docker images 
+$ docker images
 	'mostra as imagens locais'
 
 $ docker run <imagem>:<tag> <comando> <argumento>
@@ -88,19 +88,19 @@ $ docker run <imagem>:<tag> <comando> <argumento>
 // $ docker run -d --name container_3 --net my_bridge_network busybox sleep 1000
 // $ docker run -d --name container_4 --net host busybox sleep 1000
 	'roda um container, se a imagem não existir tenta baixar do dockerhub'
-	
-	COMANDO/ARGUMENTO 
+
+	COMANDO/ARGUMENTO
 	echo "hello world"
 		'printa na tela'
 	ls /
 		'mostra pasta root'
 	bash
 		'terminal'
-	
+
 	FLAGS
-	-it 
+	-it
 		'inicia modo interativo do container com stdin e stdout'
-	-d 
+	-d
 		'roda container em background'
 	-p 8888:8080
 		'expoe a porta 8080 do container para a porta 8888 do host'
@@ -113,11 +113,11 @@ $ docker run <imagem>:<tag> <comando> <argumento>
 	--net <nome_rede>
 		'define rede usada no container'
 
-$ docker ps 
+$ docker ps
 	'mostra os containers ativos'
 
 	FLAGS
-	-a 
+	-a
 		'mostra ativos e inativos'
 
 $ docker inspect <container_id>
@@ -165,7 +165,7 @@ $ docker exec <container_id> <comando> <argumento>
 	'para rodar um comando num container ativo'
 
 	FLAGS
-	-it 
+	-it
 		'para rodar no modo iterativo'
 
 	COMANDO/ARGUMENTO
@@ -193,7 +193,7 @@ $ docker network disconnect <nome_rede> <nome_container>
 	'remove conexão de uma rede ao container'
 
 # Outros comandos
-$ exit 
+$ exit
 	'sai do container e mata ele'
 |
 |
@@ -229,8 +229,11 @@ $ docker-compose up
 	'build nos containers do docker-container'
 
 	FLAGS
-	-d 
+	-d
 		'rodar em background'
+
+$ docker-compose down
+	'remove todos os containers do compose e a rede criada'
 
 $ docker-compose ps
 	'olha status dos containers rodados com compose'
@@ -239,7 +242,7 @@ $ docker-compose ps
 $ docker-compose logs <comando>
 	'olha logs'
 
-	COMANDO/ARGUMENTO 
+	COMANDO/ARGUMENTO
 	nome_container
 		'mostra o log de um container específico'
 
@@ -247,7 +250,7 @@ $ docker-compose stop
 	'para todos os containers sem removê-los'
 
 $ docker-compose rm
-	'remove todos os containers do compose'		
+	'remove todos os containers do compose'
 
 $ docker-compose build
 'força que o compose de build na imagem'
