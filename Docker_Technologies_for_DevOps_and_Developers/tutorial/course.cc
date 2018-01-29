@@ -18,6 +18,11 @@ Docker daemon
 	- roda no sistema (se linux) ou numa VM (windows, osx)
 Registry
 	- armazena
+
+# Integração contínua
+circleci
+	- servidor free de integração contínua
+	- pode ser conectado diretamente com github
 |
 |
 |
@@ -253,4 +258,9 @@ $ docker-compose rm
 	'remove todos os containers do compose'
 
 $ docker-compose build
-'força que o compose de build na imagem'
+	'força que o compose de build na imagem'
+
+$ docker-compose run <servico_compose> <comando> <argumentos>
+// $ docker-compose run dockerapp python test.py
+	'roda um comando em um serviço do docker-compose'
+	'sobrescreve comando inicial'
