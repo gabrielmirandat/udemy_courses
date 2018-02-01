@@ -158,8 +158,12 @@ $ docker login
 	'faz login no dockerhub'
 
 	FLAGS
-	--username=<usuario>
+	-u <usuario>
 		'indica nome de usuario dockerhub'
+	-e <mail>
+		'indica email'
+	-p <senha>
+		'indica a senha'
 
 $ docker push <dockerhub_id/repositorio>:<tag>
 	'faz push para dockerhub'
