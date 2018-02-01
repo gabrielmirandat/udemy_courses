@@ -20,9 +20,18 @@ Registry
 	- armazena
 
 # Integração contínua
-circleci
+circleci (VS JENKINS, TRAVIS)
 	- servidor free de integração contínua
 	- pode ser conectado diretamente com github
+
+digitalocean (VS HEROKU)
+	- oferece cloud para rodar máquinas virtuais e o que quiser
+
+docker-swarm (VS KUBERNETES)
+	- quando aplicação precisa ser escalada
+	- muitos containers
+	- um docker-swarm pode gerenciar multiplos hosts
+	- 'manager node' manda tasks para os 'worker nodes'
 |
 |
 |
@@ -227,7 +236,16 @@ $ exit
 	- sempre que instalar algo coloca -y para aceitar os prompts automaticamente
 	- encadear RUN para reduzir número de layers criadas
 	- instalar pacotes em ordem alfanumerica
-
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
 # Docker-compose
 	- Facilita a gerência de containers com script
 
@@ -268,3 +286,82 @@ $ docker-compose run <servico_compose> <comando> <argumentos>
 // $ docker-compose run dockerapp python test.py
 	'roda um comando em um serviço do docker-compose'
 	'sobrescreve comando inicial'
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+# Docker-machine
+	- Gerencia máquinas virtuais usadas para deploy
+
+$ docker-machine ls
+	'lista máquinas virtuais gerenciaveis'
+
+$ docker-machine create --driver <driver> --digitalocean-access-token <token> <vm_name>
+// $ docker-machine create --driver digitalocean --digitalocean-access-token 67c583fdd7a686d9c08a7619ff0755710c427b83284b250268fceb831347d012 docker-app-machine
+	'solicita uma nova vm do digitalocean chamada docker-app-machine,
+	 instala docker-engine na vm, gera certificados'
+
+	FLAGS
+	--driver <driver>
+		'especifica driver da vm, podendo ser digitalocean, heroku'
+
+	--digitalocean-access-token <token>
+		'informa token da vm digitalocean a ser utilizada'
+
+
+$ docker-machine env <vm_name>
+$ eval $(<vm_name> env <vm_name>)
+// $ docker-machine env docker-app-machine
+// $ eval $(docker-machine env docker-app-machine)
+	'configura o ambiente para o cliente docker'
+
+$ docker-machine ssh <vm_name>
+//$ docker-machine ssh swarm_node
+	'entra dentro da máquina virtual'
+
+//** $ docker-compose -f docker-compose-production up -d
+	'deploy todos os serviços na vm definidos no .yml'
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+# Docker swarm
+	- Gerencia deploy com muitos containers
+
+//** $ docker-machine create --driver digitalocean --digitalocean-access-token 67c583fdd7a686d9c08a7619ff0755710c427b83284b250268fceb831347d012 swarm-manager
+	'solicita uma nova vm do digitalocean chamada swarm-manager'
+
+//** $ docker-machine env swarm-manager
+//** $ eval $(docker-machine env swarm-manager)
+	'configura o ambiente para o cliente docker'
+
+//** $ docker-machine create --driver digitalocean --digitalocean-access-token 67c583fdd7a686d9c08a7619ff0755710c427b83284b250268fceb831347d012 swarm-node
+	'solicita uma nova vm do digitalocean chamada swarm-node'
+
+$ docker swarm init --advertise-addr <public_IP_swarm_node>
+// $ docker swarm init --advertise-addr 104.131.81.40
+	'inicia o swarm com um swarm node'
+
+	FLAGS
+	--advertise-addr <public_IP_swarm_node>
+		'IP do nó swarm'
+
+//** $ docker-machine ssh swarm_node
+$ docker swarm join --token <token> <public_IP_swarm_node>
+// $ docker swarm join --token SWMTKM-1-118* 104.131.81.40:2377
+	'adiciona a vm atual como worker node na rede da vm swarm'
+
+$ docker swarm leave
+	'tira vm atual do swarm'
