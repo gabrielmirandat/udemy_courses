@@ -24,7 +24,7 @@ circleci (VS JENKINS, TRAVIS)
 	- servidor free de integração contínua
 	- pode ser conectado diretamente com github
 
-digitalocean (VS HEROKU)
+digitalocean (VS HEROKU VS AWS)
 	- oferece cloud para rodar máquinas virtuais e o que quiser
 
 docker-swarm (VS KUBERNETES)
@@ -32,6 +32,11 @@ docker-swarm (VS KUBERNETES)
 	- muitos containers
 	- um docker-swarm pode gerenciar multiplos hosts
 	- 'manager node' manda tasks para os 'worker nodes'
+
+docker-stack
+	- grupo de serviços que compartilham dependências e são orquestrados e escalados juntos
+	- coleção de todos os serviços definidos em um docker compose
+	-
 |
 |
 |
@@ -365,3 +370,35 @@ $ docker swarm join --token <token> <public_IP_swarm_node>
 
 $ docker swarm leave
 	'tira vm atual do swarm'
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+# Docker stack
+	- Grupo de serviços com dependências que são orquestrados e escalados juntos
+
+$ docker stack deploy --compose-file <compose.yml> <stack_name>
+// $ docker stack deploy --compose-file docker-compose-stack-production dockerapp_stack
+	'cria uma stack do arquivo docker compose'
+
+	FLAGS
+
+	--compose-file <compose.yml>
+		'indica qual o arquivo compose.yml de configuração'
+
+$ docker stack ls
+	'lista as stacks presentes no sistema'
+
+$ docker stack services <stack_name>
+// $ docker stack services dockerapp_stack
+	'lista todos os serviços da stack'
+
+$ docker stack rm <stack_name>
+// $ docker stack rm dockerapp_stack
+	'remove uma stack do sistema'
