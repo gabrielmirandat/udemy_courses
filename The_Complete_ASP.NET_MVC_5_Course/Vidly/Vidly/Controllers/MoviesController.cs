@@ -11,7 +11,7 @@ namespace Vidly.Controllers
     public class MoviesController : Controller
     {
         // GET: Movies/Random
-        public ActionResult Random()
+        public ActionResult Index()
         {
             // var movie = new Movie() {Name = "Shrek!"};
             // return View(movie);
@@ -20,17 +20,16 @@ namespace Vidly.Controllers
             // return new EmptyResult();
             // return RedirectToAction("Index", "Home",new {page=1,sortBy="name"});
 
-            var movie = new Movie() {Name = "Shrek!"};
-            var customers = new List<Customer>
+            var movies = new List<Movie>
             {
-                new Customer {Name = "Customer1" },
-                new Customer {Name = "Customer1" }
+                new Movie {Name = "Shrek!" },
+                new Movie {Name = "Wall E" }
             };
 
             var viewModel = new RandomMovieViewModel
             {
-                Movie = movie,
-                Customers = customers
+                Movies = movies,
+                Customers = null
             };
 
             return View(viewModel);
@@ -44,7 +43,7 @@ namespace Vidly.Controllers
         }
 
         // GET: Movies/Index?pageIndex={pageIndex}&stringSortBy={stringSortBy}
-        public ActionResult Index(int? pageIndex, string sortBy)
+        public ActionResult Index2(int? pageIndex, string sortBy)
         {
             if (!pageIndex.HasValue)
                 pageIndex = 1;
