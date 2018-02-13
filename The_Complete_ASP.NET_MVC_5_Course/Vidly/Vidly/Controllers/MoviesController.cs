@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Vidly.Models;
 using Vidly.ViewModels;
 
-namespace Vidly.Controllers
+namespace Vidly.Movies
 {
     public class MoviesController : Controller
     {
@@ -33,10 +34,21 @@ namespace Vidly.Controllers
             // return new EmptyResult();
             // return RedirectToAction("Index", "Home",new {page=1,sortBy="name"});
 
-            var movies = _context.Movies.ToList();
+            var movies = _context.Movies.Include(m => m.Genre).ToList();
 
             return View(movies);
 
+        }
+
+        // GET: Movies/Details/id
+        public ActionResult Details(int id)
+        {
+            var movie = _context.Movies.Include(c => c.Genre).SingleOrDefault(m => m.Id == id);
+
+            if (movie == null)
+                return HttpNotFound();
+
+            return View(movie);
         }
 
         // GET: Movies/Edit/id or Movies/Edit?id={id}
