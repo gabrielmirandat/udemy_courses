@@ -24,6 +24,42 @@ namespace Vidly.Movies
             _context.Dispose();
         }
 
+        public ActionResult New()
+        {
+            var genres = _context.Genres.ToList();
+
+            var viewModel = new MovieFormViewModel()
+            {
+                Genre = genres
+            };
+
+            return View("MovieForm", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Save(Movie movie)
+        {
+            if (movie.Id == 0)
+            {
+                movie.AddedDate = DateTime.Now;
+                _context.Movies.Add(movie);
+            }
+            else
+            {
+                var movieInDb = _context.Movies.Single(c => c.Id == movie.Id);
+
+                // Mapper.Map(movie, movieInDb);
+                movieInDb.Name = movie.Name;
+                movieInDb.ReleaseDate = movie.ReleaseDate;
+                movieInDb.AddedDate = DateTime.Now;
+                movieInDb.NumberInStock = movie.NumberInStock;
+                movieInDb.GenreId = movie.GenreId;
+            }
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Movies");
+        }
+
         // GET: Movies/Random
         public ActionResult Index()
         {
@@ -51,21 +87,21 @@ namespace Vidly.Movies
             return View(movie);
         }
 
-        // GET: Movies/Edit/id or Movies/Edit?id={id}
         public ActionResult Edit(int id)
         {
-            return Content("id=" + id);
-        }
+            var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
 
-        // GET: Movies/Index?pageIndex={pageIndex}&stringSortBy={stringSortBy}
-        public ActionResult Index2(int? pageIndex, string sortBy)
-        {
-            if (!pageIndex.HasValue)
-                pageIndex = 1;
-            if (String.IsNullOrWhiteSpace(sortBy))
-                sortBy = "Name";
+            if (movie == null)
+                return HttpNotFound();
 
-            return Content(String.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
+            var viewModel = new MovieFormViewModel
+            {
+                Movie = movie,
+                Genre = _context.Genres.ToList()
+
+            };
+
+            return View("MovieForm", viewModel);
         }
 
         // GET: Movies/released/year/month
