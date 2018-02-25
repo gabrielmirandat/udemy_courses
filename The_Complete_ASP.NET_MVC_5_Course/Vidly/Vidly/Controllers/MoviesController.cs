@@ -30,6 +30,7 @@ namespace Vidly.Movies
 
             var viewModel = new MovieFormViewModel()
             {
+                Movie = new Movie(),
                 Genre = genres
             };
 
@@ -37,6 +38,7 @@ namespace Vidly.Movies
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Movie movie)
         {
             if (!ModelState.IsValid)
