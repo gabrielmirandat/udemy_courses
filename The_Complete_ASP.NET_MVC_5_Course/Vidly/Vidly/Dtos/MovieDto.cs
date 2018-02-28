@@ -23,6 +23,8 @@ namespace Vidly.Dtos
         // [Min1Max20NumberStock]
         public int NumberInStock { get; set; }
 
+        public GenreDto Genre { get; set; }
+
         public byte GenreId { get; set; }
     }
 }

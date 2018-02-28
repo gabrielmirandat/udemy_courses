@@ -75,17 +75,7 @@ namespace Vidly.Movies
         // GET: Movies/Random
         public ActionResult Index()
         {
-            // var movie = new Movie() {Name = "Shrek!"};
-            // return View(movie);
-            // return Content("Hello World!");
-            // return HttpNotFound();
-            // return new EmptyResult();
-            // return RedirectToAction("Index", "Home",new {page=1,sortBy="name"});
-
-            var movies = _context.Movies.Include(m => m.Genre).ToList();
-
-            return View(movies);
-
+            return View();
         }
 
         // GET: Movies/Details/id
