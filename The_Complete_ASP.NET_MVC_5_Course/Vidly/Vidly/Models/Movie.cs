@@ -29,6 +29,8 @@ namespace Vidly.Models
 
         public Genre Genre { get; set; }
 
+        public byte NumberAvailable { get; set; }
+
         public static readonly byte MinStock = 1;
         public static readonly byte MaxStock = 20;
     }
